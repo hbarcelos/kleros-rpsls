@@ -1,0 +1,50 @@
+{
+  "name": "kleros-rpsls",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": ["packages/*"],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lerna run --concurrency 1 --stream precommit"
+    }
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.6.0",
+    "@babel/core": "^7.6.0",
+    "@babel/node": "^7.6.1",
+    "@babel/preset-env": "^7.6.0",
+    "@babel/preset-typescript": "^7.6.0",
+    "@types/jest": "^24.0.24",
+    "@types/node": "^11.13.20",
+    "@typescript-eslint/eslint-plugin": "^2.3.0",
+    "@typescript-eslint/parser": "^2.3.0",
+    "babel-eslint": "^10.0.3",
+    "concurrently": "^4.1.2",
+    "cross-env": "^5.0.5",
+    "cross-var": "^1.1.0",
+    "eslint": "^6.4.0",
+    "eslint-config-prettier": "^6.3.0",
+    "eslint-config-prettier-standard": "^3.0.1",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-json": "^1.4.0",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "eslint-plugin-truffle": "^0.3.0",
+    "husky": "^3.0.5",
+    "jest": "^24.9.0",
+    "lerna": "^3.16.4",
+    "lint-staged": "^9.2.5",
+    "prettier": "^1.18.2",
+    "prettier-config-standard": "^1.0.1",
+    "prettier-plugin-solidity": "^1.0.0-alpha.34",
+    "ts-jest": "^24.2.0",
+    "ts-node": "^8.4.1",
+    "typescript": "^3.6.3"
+  },
+  "dependencies": {
+    "core-js": "3"
+  }
+}
