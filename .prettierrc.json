@@ -3,6 +3,7 @@
   "trailingComma": "es5",
   "htmlWhitespaceSensitivity": "css",
   "endOfLine": "lf",
+  "bracketSpacing": true,
   "overrides": [
     {
       "files": "*.json",

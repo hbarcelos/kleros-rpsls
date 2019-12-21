@@ -9,8 +9,12 @@
     "module": "commonjs",
     "allowJs": false,
     "checkJs": false,
-    "esModuleInterop": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
-  }
+    "emitDecoratorMetadata": true,
+    "lib": ["es6", "dom"],
+    "jsx": "react",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true
+  },
+  "include": ["./packages/*/src", "./packages/*/src/types"]
 }

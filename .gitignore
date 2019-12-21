@@ -1,6 +1,9 @@
 dist/
 **/dist/
 
+.cache/
+**/.cache/
+
 node_modules/
 **/node_modules/
 
@@ -15,6 +18,9 @@ coverage/
 
 *.tsbuildinfo
 **/*.tsbuildinfo
+
+.env
+**/.env
 
 # Editor directories and files
 .vs/

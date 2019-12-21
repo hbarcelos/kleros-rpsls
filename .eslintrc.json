@@ -21,18 +21,82 @@
   "plugins": ["import"],
   "overrides": [
     {
-      "files": ["*.ts"],
+      "files": ["*.jsx"],
+      "extends": ["plugin:react/recommended"],
+      "parser": "babel-eslint",
+      "plugins": ["react", "react-hooks"],
+      "parserOptions": {
+        "ecmaFeatures": {
+          "jsx": true
+        },
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+      },
+      "settings": {
+        "react": {
+          "version": "^16.9.0"
+        },
+        "import/resolver": {
+          "node": {
+            "extensions": [".js", ".jsx"]
+          }
+        }
+      },
+      "rules": {
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
+        "security/detect-object-injection": "off",
+        "import/extensions": [
+          "error",
+          "ignorePackages",
+          {
+            "js": "never",
+            "jsx": "never"
+          }
+        ]
+      }
+    },
+    {
+      "files": ["*.{ts,tsx}"],
       "extends": [
+        "plugin:react/recommended",
         "prettier/@typescript-eslint",
         "plugin:@typescript-eslint/recommended",
         "plugin:@typescript-eslint/eslint-recommended",
         "plugin:import/typescript"
       ],
       "parser": "@typescript-eslint/parser",
-      "plugins": ["@typescript-eslint"],
+      "parserOptions": {
+        "project": "./tsconfig.json"
+      },
+      "plugins": ["@typescript-eslint", "react", "react-hooks"],
+      "settings": {
+        "react": {
+          "version": "^16.9.0"
+        },
+        "import/resolver": {
+          "node": {
+            "extensions": [".js", ".jsx", ".ts", ".tsx"]
+          }
+        }
+      },
       "rules": {
         "no-useless-constructor": "off",
-        "@typescript-eslint/no-useless-constructor": "error"
+        "@typescript-eslint/no-useless-constructor": "error",
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
+        "react/prop-types": "off",
+        "security/detect-object-injection": "off",
+        "import/extensions": [
+          "error",
+          "ignorePackages",
+          {
+            "js": "never",
+            "jsx": "never",
+            "ts": "never",
+            "tsx": "never"
+          }
+        ]
       }
     },
     {

@@ -14,7 +14,7 @@ pragma solidity ^0.4.9;
 contract RPS {
     address public j1; // The first player creating the contract.
     address public j2; // The second player.
-    enum Move {Null, Rock, Paper, Scissors, Spock, Lizard} // Possible moves. Note that if the parity of the moves is the same the lower one wins, otherwise the higher one.
+    enum Move { Null, Rock, Paper, Scissors, Spock, Lizard } // Possible moves. Note that if the parity of the moves is the same the lower one wins, otherwise the higher one.
     bytes32 public c1Hash; // Commitment of j1.
     Move public c2; // Move of j2. Move.Null before he played.
     uint256 public stake; // Amout bet by each party.
@@ -36,9 +36,9 @@ contract RPS {
      *  @param _c2 The move submitted by j2.
      */
     function play(Move _c2) payable {
-        require(c2 == Move.Null); // J2 has not played yet.
-        require(msg.value == stake); // J2 has paid the stake.
-        require(msg.sender == j2); // Only j2 can call this function.
+        require(c2 == Move.Null, 'You already played'); // J2 has not played yet.
+        require(msg.value == stake, 'Invalid stake'); // J2 has paid the stake.
+        require(msg.sender == j2, 'You cannot call this function'); // Only j2 can call this function.
 
         c2 = _c2;
         lastAction = now;
@@ -49,15 +49,17 @@ contract RPS {
      *  @param _salt The salt used when submitting the commitment when the constructor was called.
      */
     function solve(Move _c1, uint256 _salt) {
-        require(c2 != Move.Null); // J2 must have played.
-        require(msg.sender == j1); // J1 can call this.
-        require(keccak256(_c1, _salt) == c1Hash); // Verify the value is the commited one.
+        require(c2 != Move.Null, 'Player 2 has not played yet'); // J2 must have played.
+        require(msg.sender == j1, 'You cannot call this function'); // J1 can call this.
+        require(keccak256(_c1, _salt) == c1Hash, 'This was not your move'); // Verify the value is the commited one.
 
         // If j1 or j2 throws at fallback it won't get funds and that is his fault.
         // Despite what the warnings say, we should not use transfer as a throwing fallback would be able to block the contract, in case of tie.
-        if (win(_c1, c2)) j1.send(2 * stake);
-        else if (win(c2, _c1)) j2.send(2 * stake);
-        else {
+        if (win(_c1, c2)) {
+            j1.send(2 * stake);
+        } else if (win(c2, _c1)) {
+            j2.send(2 * stake);
+        } else {
             j1.send(stake);
             j2.send(stake);
         }
@@ -67,8 +69,8 @@ contract RPS {
     /** @dev Let j2 get the funds back if j1 did not play.
      */
     function j1Timeout() {
-        require(c2 != Move.Null); // J2 already played.
-        require(now > lastAction + TIMEOUT); // Timeout time has passed.
+        require(c2 != Move.Null, 'Cannot timeout if already played'); // J2 already played.
+        require(now > lastAction + TIMEOUT, 'Timeout not expired yet'); // Timeout time has passed.
         j2.send(2 * stake);
         stake = 0;
     }
@@ -76,8 +78,8 @@ contract RPS {
     /** @dev Let j1 take back the funds if j2 never play.
      */
     function j2Timeout() {
-        require(c2 == Move.Null); // J2 has not played.
-        require(now > lastAction + TIMEOUT); // Timeout time has passed.
+        require(c2 == Move.Null, 'You have not played yet'); // J2 has not played.
+        require(now > lastAction + TIMEOUT, 'Timeout not expired yet'); // Timeout time has passed.
         j1.send(stake);
         stake = 0;
     }
