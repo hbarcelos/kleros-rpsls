@@ -3,6 +3,7 @@ import { EtherProvider } from 'use-ether-provider';
 import { allNetworks, pollingInterval, jsonRpcUrl } from './config';
 import ProviderGateway from './ProviderGateway';
 import Account from './Account';
+import MainRouter from './router/MainRouter';
 
 export default function App(): React.ReactElement {
   return (
@@ -12,7 +13,7 @@ export default function App(): React.ReactElement {
       ms={pollingInterval}
     >
       <ProviderGateway>
-        <Account />
+        <MainRouter></MainRouter>
       </ProviderGateway>
     </EtherProvider>
   );

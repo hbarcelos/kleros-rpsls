@@ -14,7 +14,8 @@
     "lib": ["es6", "dom"],
     "jsx": "react",
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "resolveJsonModule": true
   },
   "include": ["./packages/*/src", "./packages/*/src/types"]
 }
