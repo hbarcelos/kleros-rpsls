@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo, ChangeEvent, FocusEvent } from 'react';
+import { useState, useCallback, ChangeEvent, FocusEvent } from 'react';
 
 export interface FormInputHook<T, E> {
   value: T;
@@ -10,7 +10,7 @@ export interface FormInputHook<T, E> {
   triggerValidation: () => void;
 }
 
-type ValidationMode = 'onChange' | 'onBlur';
+type ValidationMode = 'onChange' | 'onBlur' | 'manual';
 
 export interface FormInputHookParameters<T> {
   defaultValue: T;

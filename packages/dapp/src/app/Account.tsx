@@ -40,7 +40,7 @@ SelectMove = memo(SelectMove);
 const Account: React.SFC<{}> = () => {
   const provider = useEtherProvider();
   const myAddress = useAccount(provider!);
-  const hasherContract = useContract(Hasher.addresses['4'], Hasher.abi);
+  const hasherContract = useContract(Hasher);
   const RPSFactory = new ContractFactory(
     RPS.abi,
     RPS.bytecode.object,

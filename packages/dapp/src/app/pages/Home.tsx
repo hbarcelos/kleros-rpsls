@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -8,8 +8,8 @@ import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-
 import useFormInput from '../../shared/hooks/useFormInput';
+import { validateAddress } from '../../shared/validation';
 import Routes from '../../app/router/Routes';
 import Layout from '../../fragments/Layout';
 
@@ -22,9 +22,6 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center',
   },
 }));
-
-const validateAddress = (address: string): true | string =>
-  /^0x[a-fA-F0-9]{40}$/.test(address) || 'Invalid address';
 
 const Home: React.SFC<{}> = () => {
   const cl = useStyles();
