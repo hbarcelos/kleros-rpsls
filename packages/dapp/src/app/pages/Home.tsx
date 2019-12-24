@@ -10,8 +10,8 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import useFormInput from '../../shared/hooks/useFormInput';
 import { validateAddress } from '../../shared/validation';
-import Routes from '../../app/router/Routes';
-import Layout from '../../fragments/Layout';
+import Routes from '../router/Routes';
+import Layout from '../fragments/Layout';
 
 const useStyles = makeStyles(theme => ({
   vMargin: {
@@ -48,7 +48,7 @@ const Home: React.SFC<{}> = () => {
   return (
     <Layout>
       <Card>
-        <CardHeader title="What would you like to do?" />
+        <CardHeader title="Welcome! What would you like to do?" />
         <CardContent>
           <Button
             fullWidth

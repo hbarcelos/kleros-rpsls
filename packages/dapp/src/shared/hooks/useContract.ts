@@ -42,7 +42,8 @@ export default function useContract(contractInfo: ContractInfo): Contract {
         provider.getSigner(accountAddress)
       )
     );
-  }, [contractAddress, abi, accountAddress, networkId, provider]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [contractAddress, accountAddress, networkId, provider]);
 
   return contract;
 }

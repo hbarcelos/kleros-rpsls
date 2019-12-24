@@ -9,7 +9,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import Layout from '../../fragments/Layout';
+import Layout from '../../app/fragments/Layout';
 import useFormInput from '../../shared/hooks/useFormInput';
 import useForm from '../../shared/hooks/useForm';
 import useContract from '../../shared/hooks/useContract';
@@ -148,15 +148,15 @@ const CreateNewGame: React.SFC<{}> = () => {
               }}
               inputProps={{
                 type: 'number',
-                min: 0.001,
-                step: 0.001,
+                min: 0.01,
+                step: 0.01,
               }}
             />
             <TextField
               select
               fullWidth
               margin="normal"
-              labgameAddress
+              label="Move"
               value={inputs.playerOneMove.value}
               error={inputs.playerOneMove.hasError}
               onChange={inputs.playerOneMove.handleChange}

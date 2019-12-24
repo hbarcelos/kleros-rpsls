@@ -38,10 +38,27 @@ export interface Game {
   address: string;
   playerOne: PlayerOneData;
   playerTwo: PlayerTwoData;
-  stake: number;
+  stake: BigNumber;
   lastAction: Date;
   timeoutMs: number;
+  result: string;
 }
+
+export const emptyGame: Game = {
+  address: '',
+  playerOne: {
+    address: '',
+    commitment: new BigNumber(-1),
+  },
+  playerTwo: {
+    address: '',
+    move: Move.Null,
+  },
+  stake: new BigNumber(0),
+  lastAction: new Date(0),
+  timeoutMs: 0,
+  result: '',
+};
 
 export function canPlayerOneClaimTimeout(
   { playerTwo, lastAction, timeoutMs, stake }: Game,
@@ -75,4 +92,21 @@ export function canPlayerTwoClaimTimeout(
   }
 
   return currentDate.getTime() - lastAction.getTime() >= timeoutMs;
+}
+
+export function isSettled({ stake }: Game): boolean {
+  return Number(stake) === 0;
+}
+
+export function hasPlayerTwoPlayed({ playerTwo }: Game): boolean {
+  return playerTwo.move !== Move.Null;
+}
+
+export function secondsUntilTimeout(
+  { lastAction, timeoutMs }: Game,
+  currentDate: Date
+): number {
+  return Math.round(
+    (timeoutMs - (currentDate.getTime() - lastAction.getTime())) / 1000
+  );
 }

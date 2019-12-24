@@ -1,56 +1,53 @@
 import React, { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { useEtherProvider, useAccount } from 'use-ether-provider';
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from '@material-ui/core/CardContent';
-import Divider from '@material-ui/core/Divider';
-import Layout from '../../fragments/Layout';
+import Layout from '../../app/fragments/Layout';
+import BlockingLoader from '../../app/fragments/BlockingLoader';
 import GameStats from '../fragments/GameStats';
 import PlayerTwoActions from '../fragments/PlayerTwoActions';
-import useGameData from '../hooks/useGameData';
-import ConnectGameContext from '../contexts/ConnectGameContext';
-import { MoveLabel, Move } from '../store/models';
+import PlayerOneActions from '../fragments/PlayerOneActions';
+import CreateGameFloatingButton from '../components/CreateGameFloatingButton';
+import useFetchGameData from '../hooks/useFetchGameData';
+import ConnectGameContext, {
+  ConnectGameProvider,
+} from '../contexts/ConnectGameContext';
 
-const useStyles = makeStyles(theme => ({
-  vSpacer: {
-    margin: theme.spacing(1, 0, 2),
-  },
-}));
-
-const ConnectGame: React.SFC<{}> = () => {
-  const cl = useStyles();
-
+const ConnectGameElements: React.SFC<{}> = () => {
   const { address = '' } = useParams();
-  const data = useGameData({ address });
+
+  useFetchGameData({ address });
+
+  const [{ gameData }] = useContext(ConnectGameContext);
 
   const provider = useEtherProvider();
   const accountAddress = useAccount(provider!);
 
-  const isPlayerOne = accountAddress === data.playerOne.address;
-  const isPlayerTwo = accountAddress === data.playerTwo.address;
-
-  const [{ isSubmitting }] = useContext(ConnectGameContext);
+  const isPlayerOne = accountAddress === gameData.playerOne.address;
+  const isPlayerTwo = accountAddress === gameData.playerTwo.address;
 
   return (
-    <Layout>
-      {isPlayerTwo && <PlayerTwoActions gameAddress={address} />}
-      <Card>
-        <CardHeader title={`Game Data`} />
-        <CardContent>
-          <GameStats
-            address={data.address}
-            playerOneAddress={data.playerOne.address}
-            playerTwoAddress={data.playerTwo.address}
-            playerOneCommitment={String(data.playerOne.commitment)}
-            playerTwoMove={MoveLabel[data.playerTwo.move as Move]}
-            lastAction={data.lastAction}
-          />
-        </CardContent>
-      </Card>
-    </Layout>
+    <React.Fragment>
+      <CreateGameFloatingButton />
+      {gameData.address ? (
+        <React.Fragment>
+          {isPlayerOne && <PlayerOneActions />}
+          {isPlayerTwo && <PlayerTwoActions />}
+          <GameStats />
+        </React.Fragment>
+      ) : (
+        <BlockingLoader />
+      )}
+    </React.Fragment>
+  );
+};
+
+const ConnectGame: React.SFC<{}> = () => {
+  return (
+    <ConnectGameProvider>
+      <Layout>
+        <ConnectGameElements />
+      </Layout>
+    </ConnectGameProvider>
   );
 };
 

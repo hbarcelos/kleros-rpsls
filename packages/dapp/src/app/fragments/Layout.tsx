@@ -34,7 +34,7 @@ const Layout: React.SFC<{}> = ({ children }) => {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6">
-            Kleros Rock-Paper-Scissors-Lizard-Spock
+            Kleros Rock / Paper / Scissors / Lizard / Spock
           </Typography>
           <Box display="flex" alignItems="center" className={cl.pullRight}>
             <AccountCircleIcon className={cl.accountIcon} />
